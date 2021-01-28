@@ -1,7 +1,7 @@
 export class WebSocketServer {
   callbacks: { [eventName: string]: (payload: any) => void } = {}
 
-  async on(eventName: string, callback: () => void): Promise<void> {
+  async on(eventName: string, callback: (payload: any) => void): Promise<void> {
     this.callbacks[eventName] = callback
   }
 

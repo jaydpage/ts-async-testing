@@ -26,6 +26,20 @@ describe('WebSocketServer', () => {
     await callbackCalled
     expect(callback).toBeCalledWith(payload)
   })
+
+  it('passes - because we wait for done() before exiting test', async done => {
+    // Arrange
+    const payload = { bar: 1 }
+    function callback(value: any) {
+      // Assert
+      expect(value).toEqual(payload)
+      done()
+    }
+    const server = new WebSocketServer()
+    await server.on('foo', callback)
+    // Act
+    await server.receive('foo', payload)
+  })
 })
 
 async function listenForCall(callback: jest.Mock) {
